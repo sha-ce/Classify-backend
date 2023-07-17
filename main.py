@@ -9,10 +9,6 @@ from pydantic import BaseModel
 import prediction
 
 app = FastAPI()
-# origins = [
-#   'http://localhost:3000',
-#   "https://rug6ws.csb.app/",
-# ]
 
 app.add_middleware(
   CORSMiddleware,
@@ -31,11 +27,9 @@ def hello_world():
 @app.post('/api/predict')
 def predict_image(file: UploadFile = File(...)):
   print(file)
-  extension = file.filename.split(".")[-1] in ("jpg", "jpeg", "png", "gif")
+  extension = file.filename.split(".")[-1] in ("jpg", "JPEG", "jpeg", "png", "PNG", "gif")
   if not extension:
     return "Image must be jpg, png and gif format!"
-  # img = save_upload_file_tmp(file)
-  # return img
   image = prediction.read_image(save_upload_file_tmp(file))
   image = prediction.preprocess(image)
   pred  = prediction.predict(image)

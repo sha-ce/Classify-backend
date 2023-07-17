@@ -1,17 +1,10 @@
-from io import BytesIO
-
-import cv2
-import numpy as np
-import torch
 from PIL import Image
 import yaml
-from torchvision import transforms
-import timm
+from torchvision import transforms, models
 
 
 def load_model():
-  # net = torch.load('./model.pth')
-  net = timm.create_model('vit_base_patch16_224', pretrained=True)
+  net = models.vit_b_16(weights=models.ViT_B_16_Weights.DEFAULT)
   return net
 
 
